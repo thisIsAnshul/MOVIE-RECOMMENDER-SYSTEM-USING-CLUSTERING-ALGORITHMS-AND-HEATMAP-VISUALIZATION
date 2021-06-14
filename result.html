@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+    
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}">
+
+    <style>
+
+
+
+
+body {
+background-position: center;
+background-size: cover;
+background-repeat: no-repeat;
+background-attachment: fixed;
+background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)), url("../static/movie_image.jpg");
+font-family: 'Montserrat', sans-serif;
+
+padding: 0;
+    margin: 0;
+    height: 100vh;
+    width: 100%;
+    
+    
+}
+
+form{
+position: relative;
+top: 20%;
+left: 50%;
+transform: translate(-50%,-50%);
+transition: all 1s;
+width: 50px;
+height: 50px;
+background: white;
+box-sizing: border-box;
+border-radius: 25px;
+border: 4px solid white;
+padding: 5px;
+}
+
+.main-input{
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;;
+height: 42.5px;
+line-height: 30px;
+outline: 0;
+border: 0;
+display: none;
+font-size: 1em;
+border-radius: 20px;
+padding: 0 20px;
+}
+
+.fa{
+box-sizing: border-box;
+padding: 10px;
+width: 42.5px;
+height: 42.5px;
+position: absolute;
+top: 0;
+right: 0;
+border-radius: 50%;
+color: #07051a;
+text-align: center;
+font-size: 1.2em;
+transition: all 1s;
+}
+
+form:hover{
+width: 200px;
+cursor: pointer;
+}
+
+form:hover .main-input{
+display: block;
+}
+button{
+border: none;
+}
+
+form:hover .fa{
+background: #07051a;
+color: white;
+}
+h1{
+    font-weight: bold;
+text-align: center;
+font-size: 70px;
+padding-top: 40px;
+color:white;
+}
+.container{
+text-align: center;
+padding-top: 130px;
+}
+p, span{
+font-size: 3rem;
+
+color: white;
+display: inline;
+}
+.blinking-cursor {
+color: white;
+-webkit-animation: 1s blink step-end infinite;
+-moz-animation: 1s blink step-end infinite;
+-ms-animation: 1s blink step-end infinite;
+-o-animation: 1s blink step-end infinite;
+animation: 1s blink step-end infinite;
+}
+
+@keyframes blink {
+from, to {
+color: transparent;
+}
+50% {
+color:white;
+}
+}
+
+@-moz-keyframes blink {
+from, to {
+color: transparent;
+}
+50% {
+color:white;
+}
+}
+
+@-webkit-keyframes blink {
+from, to {
+color: transparent;
+}
+50% {
+color:white;
+}
+}
+
+@-ms-keyframes blink {
+from, to {
+color: transparent;
+}
+50% {
+color: white;
+
+}
+}
+
+@-o-keyframes blink {
+from, to {
+color: transparent;
+}
+50% {
+color: white;
+}
+}
+body{
+    color: white;
+}
+h3{
+    text-align: center;
+    color: white;
+    font-size: 40px;
+}
+.movie-list{
+    padding-top: 55px;
+    text-align: center;
+}
+p{
+    text-align: center;
+    color: white;
+    font-size: 20px;
+}
+.card{
+    border-radius: 1rem;
+    border:10px solid white;
+    margin: 10%;
+}
+.form{
+background: none;
+border: none;
+width: auto;
+position: static;
+transform: none;
+}
+    </style>
+</head>
+<body id="content">
+    <div class="results">
+	    <center>
+	      <h2 id="name" class="text-uppercase">{{movie_user_likes}}</h2>
+	    </center>
+	</div>
+	<br>
+
+    <div id="mycontent">
+        <div id="mcontent">
+          
+          <div id="details">
+            <br/>
+            <h6 id="title" style="color:white;">TITLE: &nbsp;{{movie_user_likes}}</h6>
+            <h6 id="overview" style="color:white;max-width: 85%">OVERVIEW: <br/><br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{overview}}</h6>
+            <h6 id="vote_average" style="color:white;">RATING: &nbsp;{{vote_avg}}/10 ({{vote_count}} votes)</h6>
+            <h6 id="genres" style="color:white;">GENRE: &nbsp;{{genres}}</h6>
+            <h6 id="date" style="color:white;">RELEASE DATE: &nbsp;{{release_date}}</h6>
+            <h6 id="runtime" style="color:white;">RUNTIME: &nbsp;{{runtime}}</h6>
+          </div>
+        </div>
+    </div>
+    <br/>
+    
+    <div class="movie" style="color: #E8E8E8;">
+        <center><h3>RECOMMENDED MOVIES FOR YOU</h3><h5>(Click any of the movies to get recommendation)</h5></center>
+      </div>
+      <br><br><br>
+
+     
+      <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card" style="background: none;" title="{{movie_name1}}">
+                    <div class="card-body" >
+                        <form class="form" action="/result" method="post">
+                            <input type="submit" name="movie" class="card-btn btn btn-danger card-title" value="{{movie_name1}}">
+                        
+                      </div>
+                      <h2>Genres</h2>
+                      <h5>{{movie_key[0]}}</h5>
+                      <h2>Rating</h2>
+                      <h5>{{movie_rat[0]}}</h5>
+                    </form>
+
+                     </div>
+                     
+            </div>
+            <div class="col-sm-4">
+                <div class="card" style="background: none;" title="{{movie_name1}}">
+                    <div class="card-body" >
+                        <form class="form" action="/result" method="post">
+                            <input type="submit" name="movie" class="card-btn btn btn-danger card-title" value="{{movie_name2}}">
+                        
+                        </div>
+                        <h2>Genres</h2>
+                        <h5>{{movie_key[1]}}</h5>
+                        <h2>Rating</h2>
+                        <h5>{{movie_rat[1]}}</h5>
+                    </form>
+                     </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card" style="background: none;" title="{{movie_name1}}">
+                    <div class="card-body" >
+                        <form class="form" action="/result" method="post">
+                            <input type="submit" name="movie" class="card-btn btn btn-danger card-title" value="{{movie_name3}}">
+                        
+                        </div>
+                        <h2>Genres</h2>
+                        <h5>{{movie_key[2]}}</h5>
+                        <h2>Rating</h2>
+                        <h5>{{movie_rat[2]}}</h5>
+                    </form>
+                     </div>
+            </div>
+           
+        </div>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="card" style="background: none;" title="{{movie_name1}}">
+                    <div class="card-body" >
+                        <form class="form" action="/result" method="post">
+                            <input type="submit" name="movie" class="card-btn btn btn-danger card-title" value="{{movie_name4}}">
+                        
+                        </div>
+                        <h2>Genres</h2>
+                        <h5>{{movie_key[3]}}</h5>
+                        <h2>Rating</h2>
+                        <h5>{{movie_rat[3]}}</h5>
+                    </form>
+                     </div>
+            </div>
+
+            <div class="col-sm-4">
+                <div class="card" style="background: none;" title="{{movie_name1}}">
+                    <div class="card-body" >
+                        <form class="form" action="/result" method="post">
+                            <input type="submit" name="movie" class="card-btn btn btn-danger card-title" value="{{movie_name5}}">
+                        
+                        </div>
+                        <h2>Genres</h2>
+                        <h5>{{movie_key[4]}}</h5>
+                        <h2>Rating</h2>
+                        <h5>{{movie_rat[4]}}</h5>
+                    </form>
+                     </div>
+            </div>
+        </div>          
+          
+      </div>
+    <form action="/" class="form" style="margin-left: 50%; margin-bottom: 10%;">
+    <input type="submit" class="btn-danger" value="EXIT"></form>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+  <!-- <h1>Movie Recommendation System</h1>
+  <div class="movie-list">
+    <h3>Movies you might like similar to {{movie_user_likes}} </h3>
+    <br><br>
+      
+          
+        <input class="btn-danger" type="submit" name="movie" value="{{movie_name1}}">
+            <br><br><br>
+            <input class="btn-danger" type="submit" name="movie" value="{{movie_name2}}">
+        <br><br><br>
+        <input class="btn-danger" type="submit" name="movie" value="{{movie_name3}}"><br> <br><br>
+        <input class="btn-danger" type="submit" name="movie" value="{{movie_name4}}"><br><br><br>
+        <input class="btn-danger" type="submit" name="movie" value="{{movie_name5}}"><br><br><br>
+    </form>
+    </div> -->
+</body>
+</html>
